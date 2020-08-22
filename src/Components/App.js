@@ -6,6 +6,8 @@ import Routers from "./Routers";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 
+import { ToastContainer, toast } from "react-toastify";
+
 const QUERY = gql`
   {
     isLogin @client
@@ -21,6 +23,7 @@ function App() {
     <ThemeProvider theme={Theme}>
       <GlobalStyles />
       <Routers isLogin={isLogin} />
+      <ToastContainer position={toast.POSITION.BOTTOM_LEFT} />
     </ThemeProvider>
   );
 }

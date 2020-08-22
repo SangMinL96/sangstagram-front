@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
 import React from "react";
 import Feed from "../Routes/Feed";
-import LoginAuth from "../Routes/LoginAuth";
+import Auth from "../Routes/Login/Auth";
 
 const LogInRoute = () => (
   <>
@@ -11,7 +11,7 @@ const LogInRoute = () => (
 );
 const LogOutRoute = () => (
   <>
-    <Route exact path="/" component={LoginAuth}></Route>
+    <Route exact path="/" component={Auth}></Route>
   </>
 );
 
