@@ -42,14 +42,14 @@ const LogoImg = styled.img`
 `;
 
 function LoginAuth() {
-  const [login, setLogin] = useState(true);
+  const [login, setLogin] = useState("" || true);
   return (
     <Wrapper>
       {login ? (
         <>
           <LoginContainer>
             <LogoImg src={logoImg} />
-            <LoginForm loginState={login} />
+            <LoginForm loginState={login} setLogin={setLogin} />
           </LoginContainer>
           <LoginState>
             계정이 없으신가요?

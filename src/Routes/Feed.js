@@ -1,7 +1,13 @@
 import React from "react";
+import Header from "../Components/Header";
 
 function Feed() {
-  return <div>피드</div>;
+  return (
+    <>
+      <Header />
+      sdafasfas
+    </>
+  );
 }
 
 export default Feed;

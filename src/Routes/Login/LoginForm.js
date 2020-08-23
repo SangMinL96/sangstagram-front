@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useInput } from "../../Hooks/useInput";
 import { useMutation } from "@apollo/react-hooks";
-import { LOG_IN, CREATE_ACCOUNT } from "./LoginQuery";
+import {
+  LOG_IN,
+  CREATE_ACCOUNT,
+  CONFIRM_SECRET,
+  LOCAL_LOG_IN,
+} from "./LoginQuery";
 import { toast } from "react-toastify";
 
 const Form = styled.form`
@@ -34,19 +39,49 @@ const Button = styled.button`
   font-weight: 700;
 `;
 
-function LoginForm({ loginState }) {
+function LoginForm({ loginState, setLogin }) {
   const email = useInput("");
   const name = useInput("");
   const lastName = useInput("");
   const firstName = useInput("");
-  const [requestSecret] = useMutation(LOG_IN, {
+  const secret = useInput("");
+
+  const [requestSecretMutation] = useMutation(LOG_IN, {
     variables: { email: email.value },
   });
-  const onLogin = (ev) => {
+  const [createAccountMutation] = useMutation(CREATE_ACCOUNT, {
+    variables: {
+      email: email.value,
+      name: name.value,
+      firstName: firstName.value,
+      lastName: lastName.value,
+    },
+  });
+  const [conFirmSecretMutation] = useMutation(CONFIRM_SECRET, {
+    variables: {
+      email: email.value,
+      secret: secret.value,
+    },
+  });
+  const [localLogInMutation] = useMutation(LOCAL_LOG_IN);
+
+  const onLogin = async (ev) => {
     ev.preventDefault();
     if (loginState === true) {
       if (email.value !== "") {
-        requestSecret();
+        try {
+          const {
+            data: { requestSecret },
+          } = await requestSecretMutation();
+          if (!requestSecret) {
+            toast.error("계정이 없습니다. 계정을 생성하세요.");
+          } else {
+            toast.success("받은 편지함에 로그인 비밀이 있는지 확인합니다.");
+            setLogin("secret");
+          }
+        } catch {
+          toast.error("암호를 요청할 수 없습니다. 다시 시도하십시오.");
+        }
       } else {
         toast.error("이메일 항목이 필요합니다.");
       }
@@ -57,24 +92,40 @@ function LoginForm({ loginState }) {
         firstName.value !== "" &&
         lastName.value
       ) {
-        createAccount();
+        try {
+          const {
+            data: { createAccount },
+          } = await createAccountMutation();
+          if (!createAccount) {
+            toast.error("계정을 만들 수 없습니다.");
+          } else {
+            toast.success("계정을 만들었습니다. 지금 로그인하세요.");
+          }
+        } catch (e) {
+          toast.error(e.message);
+        }
       } else {
         toast.error("모든 항목이 필요합니다.");
       }
+    } else if (loginState === "secret") {
+      if (secret.value !== "") {
+        try {
+          const {
+            data: { confirmSecret: token },
+          } = await conFirmSecretMutation();
+          if (token !== "" && token !== undefined) {
+            localLogInMutation({ variables: { token } });
+          }
+        } catch {
+          toast.error("시크릿 암호가 없습니다.");
+        }
+      }
     }
   };
-  const createAccount = useMutation(CREATE_ACCOUNT, {
-    variables: {
-      email: email.value,
-      name: name.value,
-      firstName: firstName.value,
-      lastName: lastName.value,
-    },
-  });
 
   return (
     <>
-      {loginState ? (
+      {loginState === true && (
         <Form onSubmit={onLogin}>
           <Input
             type="email"
@@ -84,7 +135,8 @@ function LoginForm({ loginState }) {
           />
           <Button>로그인</Button>
         </Form>
-      ) : (
+      )}
+      {loginState === false && (
         <Form onSubmit={onLogin}>
           <Input
             placeholder="성"
@@ -108,6 +160,16 @@ function LoginForm({ loginState }) {
             onChange={email.onChange}
           />
           <Button>가입</Button>
+        </Form>
+      )}
+      {loginState === "secret" && (
+        <Form onSubmit={onLogin}>
+          <Input
+            placeholder="시크릿 암호를 입력하세요"
+            value={secret.value}
+            onChange={secret.onChange}
+          />
+          <Button>인증완료</Button>
         </Form>
       )}
     </>
