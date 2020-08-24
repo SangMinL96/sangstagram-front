@@ -1,19 +1,32 @@
 import React from "react";
+import FeedHeader from "./PosterHeader";
+import PosterHeader from "./PosterHeader";
+import PosterFile from "./PosterFile";
+import PosterContents from "./PosterContents";
 
 function FeedContainer({
   id,
   user,
-  flies,
+  files,
   likeConut,
   isLiked,
   comments,
   createdAt,
+  location,
+  caption,
 }) {
-  console.log(createdAt);
+  console.log(files);
   return (
-    <div>
-      sdafsdsadfsdafasfasddddddddddddddddddddddddddddddddddddddddddddddddafs
-    </div>
+    <>
+      <PosterHeader user={user} location={location} caption={caption} />
+      <PosterFile files={files} />
+      <PosterContents
+        likeConut={likeConut}
+        isLiked={isLiked}
+        comments={comments}
+        createdAt={createdAt}
+      />
+    </>
   );
 }
 

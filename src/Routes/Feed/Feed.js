@@ -15,7 +15,7 @@ const Container = styled.div`
 `;
 function Feed() {
   const { data, loading } = useQuery(FEED_QUERY);
-  console.dir(data?.seeFeed);
+
   return (
     <Container>
       {loading && <Loading />}
@@ -25,11 +25,13 @@ function Feed() {
             key={item.id}
             id={item.id}
             user={item.user}
-            flies={item.flies}
+            files={item.files}
             likeConut={item.likeConut}
             isLiked={item.isLiked}
             comments={item.comments}
             createdAt={item.createdAt}
+            location={item.location}
+            caption={item.caption}
           />
         ))}
     </Container>
