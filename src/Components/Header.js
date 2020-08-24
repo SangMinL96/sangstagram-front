@@ -16,6 +16,7 @@ const HeaderContainer = styled.section`
   align-items: center;
   border-bottom: 1px solid wheat;
   box-shadow: 0px 2px 4px 0px rgba(64, 50, 50, 0.41);
+  z-index: 2;
 `;
 const Column = styled.div`
   width: 50%;

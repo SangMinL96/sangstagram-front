@@ -7,7 +7,7 @@ import {
   CREATE_ACCOUNT,
   CONFIRM_SECRET,
   LOCAL_LOG_IN,
-} from "./LoginQuery";
+} from "../../Query";
 import { toast } from "react-toastify";
 
 const Form = styled.form`

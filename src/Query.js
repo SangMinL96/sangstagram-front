@@ -31,3 +31,33 @@ export const LOCAL_LOG_IN = gql`
     logUserIn(token: $token) @client
   }
 `;
+
+export const FEED_QUERY = gql`
+  {
+    seeFeed {
+      id
+      location
+      caption
+      user {
+        id
+        avatar
+        name
+      }
+      files {
+        id
+        url
+      }
+      likeConut
+      isLiked
+      comments {
+        id
+        text
+        user {
+          id
+          name
+        }
+      }
+      createdAt
+    }
+  }
+`;

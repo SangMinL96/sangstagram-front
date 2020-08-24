@@ -19,7 +19,7 @@ function App() {
   const {
     data: { isLogin },
   } = useQuery(QUERY);
-  console.log(isLogin);
+
   return (
     <ThemeProvider theme={Theme}>
       <GlobalStyles />

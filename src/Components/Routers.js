@@ -1,10 +1,11 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
 import React from "react";
-import Feed from "../Routes/Feed";
+import Feed from "../Routes/Feed/Feed";
 import Auth from "../Routes/Login/Auth";
 import Profile from "../Routes/Profile";
 import Search from "../Routes/Search";
+import Header from "./Header";
 
 const LogInRoute = () => (
   <Switch>
@@ -20,7 +21,19 @@ const LogOutRoute = () => (
 );
 
 function Routers({ isLogin }) {
-  return <Router>{isLogin ? <LogInRoute /> : <LogOutRoute />}</Router>;
+  return (
+    <Router>
+      {isLogin ? (
+        <>
+          <Header />
+
+          <LogInRoute />
+        </>
+      ) : (
+        <LogOutRoute />
+      )}
+    </Router>
+  );
 }
 
 Routers.prototype = {
