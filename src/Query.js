@@ -20,6 +20,13 @@ export const CREATE_ACCOUNT = gql`
     )
   }
 `;
+export const ME = gql`
+  {
+    me {
+      name
+    }
+  }
+`;
 export const CONFIRM_SECRET = gql`
   mutation confirmSecret($email: String!, $secret: String!) {
     confirmSecret(email: $email, secret: $secret)
@@ -58,6 +65,22 @@ export const FEED_QUERY = gql`
         }
       }
       createdAt
+    }
+  }
+`;
+export const TOGGLE_LIKE = gql`
+  mutation toggleLike($postId: String!) {
+    toggleLike(postId: $postId)
+  }
+`;
+export const ADD_COMMENT = gql`
+  mutation addComment($postId: String!, $text: String!) {
+    addComment(postId: $postId, text: $text) {
+      id
+      text
+      user {
+        name
+      }
     }
   }
 `;

@@ -12,6 +12,7 @@ const Container = styled.div`
   align-items: center;
 
   height: 93.5vh;
+  margin-bottom: 5em;
 `;
 function Feed() {
   const { data, loading } = useQuery(FEED_QUERY);

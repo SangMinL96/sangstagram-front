@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Container = styled.section`
-  width: 650px;
+  width: 550px;
   height: 70px;
   margin-top: 5em;
   ${(props) => props.theme.whiteBox};

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const FileContainer = styled.div`
-  width: 650px;
+  width: 550px;
   height: 450px;
   position: relative;
   overflow: hidden;
@@ -29,6 +29,7 @@ const LeftIcon = styled(IoIosArrowBack)`
   top: 50%;
   cursor: pointer;
   display: ${(props) => props.display};
+  color: #b8b8b8;
 `;
 const RightIcon = styled(IoIosArrowForward)`
   position: absolute;
@@ -37,14 +38,13 @@ const RightIcon = styled(IoIosArrowForward)`
   top: 50%;
   cursor: pointer;
   display: ${(props) => props.display};
+  color: #b8b8b8;
 `;
 
 function PosterFile({ files }) {
-  let [current, setCurrent] = useState(0);
-
+  const [current, setCurrent] = useState(0);
   const SliderContainer = useRef();
 
-  console.log(files.length);
   const onRight = (inx) => {
     SliderContainer.current.style.left = inx * -670 + "px";
     setCurrent(inx);

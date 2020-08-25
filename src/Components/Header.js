@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { gql } from "apollo-boost";
 import { Link, withRouter } from "react-router-dom";
 import logoImg from "../Image/logo.png";
 import { IoMdCompass, IoIosHeartEmpty, IoMdPerson } from "react-icons/io";
 import { useInput } from "../Hooks/useInput";
 import { useQuery } from "@apollo/react-hooks";
+import { ME } from "../Query";
 const HeaderContainer = styled.section`
   width: 100%;
   height: 60px;
@@ -46,14 +46,6 @@ const Icons = styled(Link)`
   font-size: 1.5rem;
   margin-left: 1em;
   cursor: pointer;
-`;
-
-const ME = gql`
-  {
-    me {
-      name
-    }
-  }
 `;
 
 function Header({ history }) {

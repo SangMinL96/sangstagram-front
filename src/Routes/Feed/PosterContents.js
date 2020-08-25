@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { IoIosHeartEmpty, IoIosHeart, IoIosText } from "react-icons/io";
+import { IoMdHeartEmpty, IoMdHeart, IoIosText } from "react-icons/io";
 import { useInput } from "../../Hooks/useInput";
 import TextareaAutosize from "react-autosize-textarea";
+import { useMutation, useQuery } from "@apollo/react-hooks";
+import { TOGGLE_LIKE, ADD_COMMENT, ME } from "../../Query";
+import { toast } from "react-toastify";
 
 const ContentsContainer = styled.section`
-  width: 650px;
-
+  width: 550px;
+  user-select: none;
   ${(props) => props.theme.whiteBox};
 `;
 const LikedComments = styled.div`
@@ -44,28 +47,102 @@ const Text = styled(TextareaAutosize)`
   resize: none;
   color: #858585;
 `;
+const LikeIcon = styled.div``;
+const UserComment = styled.ul`
+  margin-top: 1em;
+  margin-left: 1.8em;
+  margin-right: 1.8em;
+  li {
+    display: flex;
+    h3 {
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-right: 0.5em;
+      margin-bottom: 0.5em;
+    }
+    span {
+      font-size: 0.8rem;
+    }
+  }
+`;
 
-function PosterContents({ likeConut, isLiked, comments, createdAt }) {
-  const [like, setLike] = useState(0);
+const TrueLike = styled(IoMdHeart)`
+  color: red;
+`;
+
+function PosterContents({ id, likeConut, isLiked, comments, createdAt }) {
+  const [like, setLike] = useState(isLiked);
+  const [likeCount, setLikeCount] = useState(likeConut);
+  const [commentUp, setCommentUp] = useState(comments);
   const text = useInput("");
+  const [toggleLikeMutation] = useMutation(TOGGLE_LIKE, {
+    variables: { postId: id },
+  });
+  const [addCommentMutation] = useMutation(ADD_COMMENT, {
+    variables: { postId: id, text: text.value },
+  });
+
+  const likeTogle = async () => {
+    if (like === false) {
+      setLike(true);
+      setLikeCount(likeCount + 1);
+    } else {
+      setLike(false);
+      setLikeCount(likeCount - 1);
+    }
+    try {
+      await toggleLikeMutation();
+    } catch {
+      setLike(!like);
+      toast.error("좋아요를 누를수 없습니다.");
+    }
+  };
+  const onKeyUp = async (ev) => {
+    const { keyCode } = ev;
+    if (keyCode === 13) {
+      ev.preventDefault();
+      text.setValue("");
+      try {
+        const {
+          data: { addComment },
+        } = await addCommentMutation();
+
+        setCommentUp([...commentUp, addComment]);
+      } catch {
+        toast.error("메시지를 보낼수없습니다.");
+      }
+    }
+  };
+
   return (
     <ContentsContainer>
       <LikedComments>
         <Like>
-          {like === 0 && <IoIosHeartEmpty onClick={() => setLike(like + 1)} />}
-          {like === 1 && <IoIosHeart onClick={() => setLike(like - 1)} />}
+          <LikeIcon onClick={likeTogle}>
+            {like ? <TrueLike /> : <IoMdHeartEmpty />}
+          </LikeIcon>
         </Like>
         <Comment>
           <IoIosText />
         </Comment>
       </LikedComments>
-      <LikedCount>{like} 좋아요</LikedCount>
+      <LikedCount>{likeCount} 좋아요</LikedCount>
+      <UserComment>
+        {commentUp &&
+          commentUp.map((item) => (
+            <li key={item.id}>
+              <h3>{item.user.name}</h3>
+              <span>{item.text}</span>
+            </li>
+          ))}
+      </UserComment>
       <CreateAT>{createdAt}</CreateAT>
       <form>
         <Text
           placeholder="댓글을 입력하세요."
           onChange={text.onChange}
           value={text.value}
+          onKeyUp={onKeyUp}
         />
       </form>
     </ContentsContainer>
