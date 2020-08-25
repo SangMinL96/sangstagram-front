@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { IoIosHeartEmpty, IoIosHeart, IoMdChatbubbles } from "react-icons/io";
+import { IoIosHeartEmpty, IoIosHeart, IoIosText } from "react-icons/io";
 import { useInput } from "../../Hooks/useInput";
+import TextareaAutosize from "react-autosize-textarea";
 
 const ContentsContainer = styled.section`
-  width: 35%;
-  height: 150px;
+  width: 650px;
 
   ${(props) => props.theme.whiteBox};
 `;
@@ -17,7 +17,7 @@ const LikedComments = styled.div`
 `;
 const Like = styled.div`
   cursor: pointer;
-  margin-right: 0.5em;
+  margin-right: 0.3em;
 `;
 const Comment = styled.div`
   cursor: pointer;
@@ -34,7 +34,16 @@ const CreateAT = styled.div`
   padding-bottom: 1em;
   border-bottom: 1px solid #e6e6e6;
 `;
-const Text = styled.input``;
+const Text = styled(TextareaAutosize)`
+  margin-left: 1.8em;
+  border: none;
+  outline: none;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  width: 93%;
+  resize: none;
+  color: #858585;
+`;
 
 function PosterContents({ likeConut, isLiked, comments, createdAt }) {
   const [like, setLike] = useState(0);
@@ -47,13 +56,17 @@ function PosterContents({ likeConut, isLiked, comments, createdAt }) {
           {like === 1 && <IoIosHeart onClick={() => setLike(like - 1)} />}
         </Like>
         <Comment>
-          <IoMdChatbubbles />
+          <IoIosText />
         </Comment>
       </LikedComments>
       <LikedCount>{like} 좋아요</LikedCount>
       <CreateAT>{createdAt}</CreateAT>
       <form>
-        <Text onChange={text.onChange} value={text.value} />
+        <Text
+          placeholder="댓글을 입력하세요."
+          onChange={text.onChange}
+          value={text.value}
+        />
       </form>
     </ContentsContainer>
   );
