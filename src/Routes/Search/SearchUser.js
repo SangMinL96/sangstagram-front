@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useMutation } from "@apollo/react-hooks";
+import { FOLLOW, UNFOLLOW } from "../../Query";
 const UserContainer = styled.div`
   width: 100%;
-  margin-top: 10em;
 `;
 const User = styled.div`
   width: 200px;
@@ -26,8 +27,9 @@ const UserName = styled.h3`
   font-weight: bold;
   margin-bottom: 1em;
 `;
-const FollowBtn = styled.div`
+const FollowBtn = styled.button`
   display: flex;
+  font-size: 0.9rem;
   font-weight: bold;
   color: white;
   align-items: center;
@@ -36,17 +38,39 @@ const FollowBtn = styled.div`
   height: 25px;
   background-color: #0984e3;
   border-radius: 5px;
+  outline: none;
+  border: none;
   cursor: pointer;
 `;
-function SearchUser({ avatar, name, isFollowing }) {
-  const [follow, setFollow] = useState(false);
+function SearchUser({ id, avatar, name, isFollowing }) {
+  const [followMution] = useMutation(FOLLOW, {
+    variables: {
+      id,
+    },
+  });
+  const [unFollowMution] = useMutation(UNFOLLOW, {
+    variables: {
+      id,
+    },
+  });
+  const [follow, setFollow] = useState(isFollowing);
+
+  const onFollow = () => {
+    if (follow === true) {
+      setFollow(false);
+      unFollowMution();
+    } else {
+      setFollow(true);
+      followMution();
+    }
+  };
   return (
     <UserContainer>
       <User>
         <Avatar avatar={avatar} />
         <UserName>{name}</UserName>
-        <FollowBtn onClick={() => setFollow(!follow)}>
-          {follow ? "Follow" : "unFollow"}
+        <FollowBtn onClick={onFollow}>
+          {follow ? "팔로우 취소" : "팔로우"}
         </FollowBtn>
       </User>
     </UserContainer>

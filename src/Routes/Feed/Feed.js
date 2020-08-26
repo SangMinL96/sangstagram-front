@@ -15,7 +15,6 @@ const Container = styled.div`
 `;
 function Feed() {
   const { data, loading } = useQuery(FEED_QUERY);
-  console.log(data);
 
   return (
     <Container>

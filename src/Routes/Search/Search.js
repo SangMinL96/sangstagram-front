@@ -22,13 +22,13 @@ function Search({ location }) {
       term: searchItem,
     },
   });
-
+  console.log(data);
   return (
     <Container>
       {searchItem === undefined ? (
         <ItemNone>관련 게시물이 없습니다.</ItemNone>
       ) : (
-        <SearchContainer user={data?.searchUser} loading={loading} />
+        <SearchContainer {...data} loading={loading} />
       )}
     </Container>
   );

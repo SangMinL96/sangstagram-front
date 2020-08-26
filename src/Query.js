@@ -88,6 +88,7 @@ export const ADD_COMMENT = gql`
 export const SEARCH = gql`
   query search($term: String!) {
     searchPost(term: $term) {
+      id
       files {
         url
       }
@@ -95,10 +96,22 @@ export const SEARCH = gql`
       likeConut
     }
     searchUser(term: $term) {
+      id
       avatar
       name
       isFollowing
       itsSelf
     }
+  }
+`;
+
+export const FOLLOW = gql`
+  mutation follow($id: String!) {
+    follow(id: $id)
+  }
+`;
+export const UNFOLLOW = gql`
+  mutation unfollow($id: String!) {
+    unfollow(id: $id)
   }
 `;
