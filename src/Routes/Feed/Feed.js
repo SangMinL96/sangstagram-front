@@ -11,11 +11,11 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
 
-  height: 93.5vh;
   margin-bottom: 5em;
 `;
 function Feed() {
   const { data, loading } = useQuery(FEED_QUERY);
+  console.log(data);
 
   return (
     <Container>

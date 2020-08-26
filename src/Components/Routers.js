@@ -4,14 +4,14 @@ import React from "react";
 import Feed from "../Routes/Feed/Feed";
 import Auth from "../Routes/Login/Auth";
 import Profile from "../Routes/Profile";
-import Search from "../Routes/Search";
 import Header from "./Header";
+import Search from "../Routes/Search/Search";
 
 const LogInRoute = () => (
   <Switch>
-    <Route exact path="/" component={Feed}></Route>
-    <Route path="/:name" component={Profile}></Route>
-    <Route path="/Search" component={Search}></Route>
+    <Route exact path="/" component={Feed} />
+    <Route exact path="/:name" component={Profile} />
+    <Route path="/Search" component={Search} />
   </Switch>
 );
 const LogOutRoute = () => (

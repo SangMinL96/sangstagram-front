@@ -84,3 +84,21 @@ export const ADD_COMMENT = gql`
     }
   }
 `;
+
+export const SEARCH = gql`
+  query search($term: String!) {
+    searchPost(term: $term) {
+      files {
+        url
+      }
+      commentCount
+      likeConut
+    }
+    searchUser(term: $term) {
+      avatar
+      name
+      isFollowing
+      itsSelf
+    }
+  }
+`;

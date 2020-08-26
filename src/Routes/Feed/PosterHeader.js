@@ -23,11 +23,12 @@ const PosterMyLogo = styled.div`
 `;
 const PosterContent = styled.div`
   margin-left: 1em;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   line-height: 1.3;
 `;
 const PosterName = styled.div`
   font-weight: 600;
+  font-size: 0.85rem;
 `;
 
 function PosterHeader({ user, location, caption }) {

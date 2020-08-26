@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
@@ -17,7 +17,7 @@ const FileSlider = styled.div`
   transition: all 0.5s linear;
 `;
 const SliderItem = styled.div`
-  width: 670px;
+  width: 550px;
   height: 100%;
   background-image: url(${(props) => props.SliderBG});
   background-size: 100% 100%;
@@ -46,11 +46,11 @@ function PosterFile({ files }) {
   const SliderContainer = useRef();
 
   const onRight = (inx) => {
-    SliderContainer.current.style.left = inx * -670 + "px";
+    SliderContainer.current.style.left = inx * -550 + "px";
     setCurrent(inx);
   };
   const onLeft = (inx) => {
-    SliderContainer.current.style.left = inx * -670 + "px";
+    SliderContainer.current.style.left = inx * -550 + "px";
     setCurrent(inx);
   };
 

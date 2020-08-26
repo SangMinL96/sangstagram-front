@@ -1,12 +1,20 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { IoMdHeartEmpty, IoMdHeart, IoIosText } from "react-icons/io";
 import { useInput } from "../../Hooks/useInput";
 import TextareaAutosize from "react-autosize-textarea";
-import { useMutation, useQuery } from "@apollo/react-hooks";
-import { TOGGLE_LIKE, ADD_COMMENT, ME } from "../../Query";
+import { useMutation } from "@apollo/react-hooks";
+import { TOGGLE_LIKE, ADD_COMMENT } from "../../Query";
 import { toast } from "react-toastify";
-
+const likeAni = keyframes`
+0%{
+  transform:scale(1)
+}50%{
+  transform:scale(1.5)
+}100%{
+  transform:scale(1)
+}
+`;
 const ContentsContainer = styled.section`
   width: 550px;
   user-select: none;
@@ -18,6 +26,7 @@ const LikedComments = styled.div`
   margin-left: 0.7em;
   font-size: 1.8rem;
 `;
+
 const Like = styled.div`
   cursor: pointer;
   margin-right: 0.3em;
@@ -68,6 +77,7 @@ const UserComment = styled.ul`
 
 const TrueLike = styled(IoMdHeart)`
   color: red;
+  animation: ${likeAni} 0.3s linear;
 `;
 
 function PosterContents({ id, likeConut, isLiked, comments, createdAt }) {

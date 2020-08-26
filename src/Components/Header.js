@@ -9,14 +9,15 @@ import { ME } from "../Query";
 const HeaderContainer = styled.section`
   width: 100%;
   height: 60px;
-  position: absolute;
+  position: fixed;
   top: 0;
   display: flex;
+  background-color: #ffffff;
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid wheat;
   box-shadow: 0px 2px 4px 0px rgba(64, 50, 50, 0.41);
-  z-index: 2;
+  z-index: 9999;
 `;
 const Column = styled.div`
   width: 50%;
@@ -51,7 +52,6 @@ const Icons = styled(Link)`
 function Header({ history }) {
   const searcing = useInput("");
   const meQuery = useQuery(ME);
-
   const onSearch = (ev) => {
     ev.preventDefault();
     history.push(`/Search/${searcing.value}`);
