@@ -3,9 +3,10 @@ import PropTypes from "prop-types";
 import React from "react";
 import Feed from "../Routes/Feed/Feed";
 import Auth from "../Routes/Login/Auth";
-import Profile from "../Routes/Profile";
+
 import Header from "./Header";
 import Search from "../Routes/Search/Search";
+import Profile from "../Routes/Profile/Profile";
 
 const LogInRoute = () => (
   <Switch>
@@ -26,7 +27,6 @@ function Routers({ isLogin }) {
       {isLogin ? (
         <>
           <Header />
-
           <LogInRoute />
         </>
       ) : (

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Container = styled.section`
   width: 550px;
@@ -35,7 +36,9 @@ function PosterHeader({ user, location, caption }) {
   return (
     <Container>
       <Contents>
-        <PosterMyLogo avatar={user.avatar} />
+        <Link to={user.name}>
+          <PosterMyLogo avatar={user.avatar} />
+        </Link>
         <PosterContent>
           <PosterName>{user.name}</PosterName>
           {location}

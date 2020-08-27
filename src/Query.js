@@ -73,17 +73,6 @@ export const TOGGLE_LIKE = gql`
     toggleLike(postId: $postId)
   }
 `;
-export const ADD_COMMENT = gql`
-  mutation addComment($postId: String!, $text: String!) {
-    addComment(postId: $postId, text: $text) {
-      id
-      text
-      user {
-        name
-      }
-    }
-  }
-`;
 
 export const SEARCH = gql`
   query search($term: String!) {
@@ -113,5 +102,66 @@ export const FOLLOW = gql`
 export const UNFOLLOW = gql`
   mutation unfollow($id: String!) {
     unfollow(id: $id)
+  }
+`;
+
+export const GET_USER = gql`
+  query seeUser($name: String!) {
+    seeUser(name: $name) {
+      id
+      avatar
+      name
+      email
+      firstName
+      lastName
+      fullName
+      bio
+      isFollowing
+      itsSelf
+      followersCount
+      followingCount
+      postsCount
+      posts {
+        id
+        files {
+          id
+          url
+        }
+        likeConut
+        commentCount
+      }
+    }
+  }
+`;
+
+export const ADD_COMMENT = gql`
+  mutation addComment($postId: String!, $text: String!) {
+    addComment(postId: $postId, text: $text) {
+      id
+      text
+      user {
+        name
+      }
+    }
+  }
+`;
+export const EDIT_USER = gql`
+  mutation editUser(
+    $name: String
+    $email: String
+    $firstName: String
+    $lastName: String
+  ) {
+    editUser(
+      name: $name
+      email: $email
+      firstName: $firstName
+      lastName: $lastName
+    ) {
+      name
+      email
+      firstName
+      lastName
+    }
   }
 `;
