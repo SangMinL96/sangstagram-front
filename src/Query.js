@@ -165,3 +165,28 @@ export const EDIT_USER = gql`
     }
   }
 `;
+export const DETAIL_POST = gql`
+  query seeFullPost($id: String!) {
+    seeFullPost(id: $id) {
+      id
+      location
+      user {
+        avatar
+        name
+      }
+      files {
+        url
+      }
+      comments {
+        text
+        user {
+          avatar
+          name
+        }
+      }
+      likeConut
+      createdAt
+      isLiked
+    }
+  }
+`;

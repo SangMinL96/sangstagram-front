@@ -22,7 +22,7 @@ function Search({ location }) {
       term: searchItem,
     },
   });
-  console.log(data);
+
   return (
     <Container>
       {searchItem === undefined ? (

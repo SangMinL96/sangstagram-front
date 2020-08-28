@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { IoMdHeartEmpty, IoMdHeart, IoIosText } from "react-icons/io";
+import { IoMdHeart, IoIosText } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 const PFpostContainer = styled.section`
   width: 50%;
@@ -46,14 +47,27 @@ const PFpostComment = styled.div`
   margin-right: 0.5em;
 `;
 
-function ProfilePost({ poster, likeCount, commentCount }) {
+function ProfilePost({
+  id,
+  poster,
+  likeConut,
+  commentCount,
+  setDetailId,
+  setDetail,
+}) {
+  const onDetail = (ev) => {
+    const postId = ev.currentTarget.attributes.id.nodeValue;
+    console.log(ev.currentTarget.attributes.id);
+    setDetailId(postId);
+    setDetail(true);
+  };
   return (
     <PFpostContainer>
       {poster?.map((img) => (
-        <PFpost key={img.id} bg={img.url}>
+        <PFpost key={img.id} id={id} onClick={onDetail}>
           <PFpostHover className="hover">
             <PFpostLike>
-              <IoMdHeart className="Icon" /> {likeCount}
+              <IoMdHeart className="Icon" /> {likeConut}
             </PFpostLike>
             <PFpostComment>
               <IoIosText className="Icon" /> {commentCount}

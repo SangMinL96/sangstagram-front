@@ -32,7 +32,7 @@ const PosterName = styled.div`
   font-size: 0.85rem;
 `;
 
-function PosterHeader({ user, location, caption }) {
+function PosterHeader({ user, location }) {
   return (
     <Container>
       <Contents>
