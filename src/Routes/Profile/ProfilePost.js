@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { IoMdHeart, IoIosText } from "react-icons/io";
-import { Link } from "react-router-dom";
 
+import Detail from "./Detail";
+const DetailBackGound = styled.div`
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  background-color: #03030347;
+`;
 const PFpostContainer = styled.section`
   width: 50%;
   margin-top: 2em;
@@ -47,34 +55,33 @@ const PFpostComment = styled.div`
   margin-right: 0.5em;
 `;
 
-function ProfilePost({
-  id,
-  poster,
-  likeConut,
-  commentCount,
-  setDetailId,
-  setDetail,
-}) {
+function ProfilePost({ id, poster, likeConut, commentCount }) {
+  const [detail, setDetail] = useState(false);
+  const [detailId, setDetailId] = useState();
   const onDetail = (ev) => {
     const postId = ev.currentTarget.attributes.id.nodeValue;
-    console.log(ev.currentTarget.attributes.id);
+
     setDetailId(postId);
     setDetail(true);
   };
   return (
     <PFpostContainer>
-      {poster?.map((img) => (
-        <PFpost key={img.id} id={id} onClick={onDetail}>
-          <PFpostHover className="hover">
-            <PFpostLike>
-              <IoMdHeart className="Icon" /> {likeConut}
-            </PFpostLike>
-            <PFpostComment>
-              <IoIosText className="Icon" /> {commentCount}
-            </PFpostComment>
-          </PFpostHover>
-        </PFpost>
-      ))}
+      <PFpost key={poster[0].id} id={id} onClick={onDetail} bg={poster[0].url}>
+        <PFpostHover className="hover">
+          <PFpostLike>
+            <IoMdHeart className="Icon" /> {likeConut}
+          </PFpostLike>
+          <PFpostComment>
+            <IoIosText className="Icon" /> {commentCount}
+          </PFpostComment>
+        </PFpostHover>
+      </PFpost>
+      {detail ? (
+        <>
+          <DetailBackGound onClick={() => setDetail(false)} />
+          <Detail id={detailId} />
+        </>
+      ) : null}
     </PFpostContainer>
   );
 }

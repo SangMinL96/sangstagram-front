@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import { IoMdHeartEmpty, IoMdHeart, IoIosText } from "react-icons/io";
 import TextareaAutosize from "react-autosize-textarea";
 import { useInput } from "../../Hooks/useInput";
-import { TOGGLE_LIKE, ADD_COMMENT, FEED_QUERY } from "../../Query";
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { TOGGLE_LIKE, ADD_COMMENT } from "../../Query";
+import { useMutation } from "@apollo/react-hooks";
 import { toast } from "react-toastify";
 
 const DetailAni = keyframes`
@@ -23,7 +23,6 @@ const DetailLikeBtn = styled(IoMdHeart)`
 const DetailContent = styled.article`
   width: 330px;
   height: 8vh;
-  background-color: blue;
 `;
 const DetailIcons = styled.ul`
   margin-top: 0.5em;
@@ -65,14 +64,33 @@ const DCarticle = styled.article`
   height: 42vh;
 
   border-bottom: 1px solid #e6e6e6;
+  div {
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+    display: flex;
+    align-items: center;
+    h3 {
+      font-weight: 600;
+      font-size: 0.8rem;
+      margin-left: 0.5em;
+    }
+    span {
+      margin-left: 0.5em;
+    }
+  }
+`;
+const CommentAvatar = styled.div`
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  background-image: url(${(props) => props.avatar});
+  background-size: 100% 100%;
 `;
 
-function DetailContents({ postId, likedCount }) {
-  const { data, loading } = useQuery(FEED_QUERY);
-
-  console.log(data);
-  const [like, setLike] = useState(false);
-  const [commentUp, setCommentUp] = useState(null);
+function DetailContents({ postId, isLiked, likeCount, comments, createdAt }) {
+  const [like, setLike] = useState(isLiked);
+  const [likeCountS, setLikeCount] = useState(likeCount);
+  const [commentUp, setCommentUp] = useState(comments);
   const DetailTextValue = useInput("");
   const [toggleLikeMutation] = useMutation(TOGGLE_LIKE, {
     variables: { postId: postId },
@@ -80,11 +98,27 @@ function DetailContents({ postId, likedCount }) {
   const [addCommentMutation] = useMutation(ADD_COMMENT, {
     variables: { postId: postId, text: DetailTextValue.value },
   });
+
+  const likeTogle = async () => {
+    if (like === false) {
+      setLikeCount(likeCountS + 1);
+      setLike(true);
+    } else {
+      setLikeCount(likeCountS - 1);
+      setLike(false);
+    }
+    try {
+      await toggleLikeMutation();
+    } catch {
+      setLike(!like);
+      toast.error("좋아요를 누를수 없습니다.");
+    }
+  };
   const onKeyUp = async (ev) => {
     const { keyCode } = ev;
     if (keyCode === 13) {
       ev.preventDefault();
-      DetailText.setValue("");
+      DetailTextValue.setValue("");
       try {
         const {
           data: { addComment },
@@ -96,20 +130,31 @@ function DetailContents({ postId, likedCount }) {
       }
     }
   };
+
   return (
     <>
-      <DCarticle></DCarticle>
+      <DCarticle>
+        {commentUp &&
+          commentUp.map((item) => (
+            <div key={item.id}>
+              <CommentAvatar avatar={item.user.avatar} />
+              <h3>{item.user.name}</h3>
+              <span>{item.text}</span>
+            </div>
+          ))}
+      </DCarticle>
       <DetailContent>
         <DetailIcons>
           {like ? (
-            <DetailLikeBtn onClick={() => setLike(false)} />
+            <DetailLikeBtn onClick={likeTogle} />
           ) : (
-            <IoMdHeartEmpty onClick={() => setLike(true)} />
+            <IoMdHeartEmpty onClick={likeTogle} />
           )}
+
           <IoIosText />
         </DetailIcons>
-        <DetailLike>{likedCount} 좋아요</DetailLike>
-
+        <DetailLike>{likeCount} 좋아요</DetailLike>
+        <DetailCreateAT>{createdAt}</DetailCreateAT>
         <form>
           <DetailText
             placeholder="댓글을 입력하세요."

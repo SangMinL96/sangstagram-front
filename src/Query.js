@@ -178,6 +178,7 @@ export const DETAIL_POST = gql`
         url
       }
       comments {
+        id
         text
         user {
           avatar

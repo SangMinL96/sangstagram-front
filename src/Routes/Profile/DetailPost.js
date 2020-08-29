@@ -8,10 +8,10 @@ const PostImg = styled.div`
   background-size: 100% 100%;
 `;
 
-function DetailPost({ bg }) {
+function DetailPost({ file }) {
   return (
     <>
-      <PostImg bg={bg} />
+      <PostImg bg={file} />
     </>
   );
 }

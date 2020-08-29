@@ -23,11 +23,11 @@ const DHname = styled.h3`
   font-weight: 600;
 `;
 
-function DetailHeader({ avatar, name }) {
+function DetailHeader({ headerData }) {
   return (
     <DetailHeaderArticle>
-      <DHavatar avatar={avatar} />
-      <DHname>{name}</DHname>
+      <DHavatar avatar={headerData?.avatar} />
+      <DHname>{headerData?.name}</DHname>
     </DetailHeaderArticle>
   );
 }

@@ -15,10 +15,10 @@ const loaderAni = keyframes`
 
 const Loader = styled.div`
   height: 93.5vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  position: fixed;
+  top: 50%;
+
+  transform: translate(50% -50%);
 `;
 const LoaderLogo = styled.img`
   animation: ${loaderAni} 0.7s ease-in-out infinite;
