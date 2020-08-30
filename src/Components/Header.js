@@ -59,7 +59,7 @@ function Header({ history }) {
   return (
     <HeaderContainer>
       <Column>
-        <LogoLink to="/">
+        <LogoLink to="/sangstagrams">
           <Logo src={logoImg} />
         </LogoLink>
         <form onSubmit={onSearch}>
@@ -77,7 +77,7 @@ function Header({ history }) {
             <IoIosHeartEmpty />
           </Icons>
           {!meQuery.data?.me ? (
-            <Icons to="/">
+            <Icons to="/sangstagrams">
               <IoMdPerson />
             </Icons>
           ) : (

@@ -10,14 +10,14 @@ import Profile from "../Routes/Profile/Profile";
 
 const LogInRoute = () => (
   <Switch>
-    <Route exact path="/" component={Feed} />
+    <Route exact path="/sangstagrams" component={Feed} />
     <Route exact path="/:name" component={Profile} />
     <Route path="/Search" component={Search} />
   </Switch>
 );
 const LogOutRoute = () => (
   <>
-    <Route exact path="/" component={Auth}></Route>
+    <Route exact path="/sangstagrams" component={Auth}></Route>
   </>
 );
 
