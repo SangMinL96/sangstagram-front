@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.js": "/sangstagrams/static/js/main.bae63ff2.chunk.js",
+    "main.js.map": "/sangstagrams/static/js/main.bae63ff2.chunk.js.map",
+    "runtime-main.js": "/sangstagrams/static/js/runtime-main.42250ee9.js",
+    "runtime-main.js.map": "/sangstagrams/static/js/runtime-main.42250ee9.js.map",
+    "static/css/2.d34346ea.chunk.css": "/sangstagrams/static/css/2.d34346ea.chunk.css",
+    "static/js/2.d47661da.chunk.js": "/sangstagrams/static/js/2.d47661da.chunk.js",
+    "static/js/2.d47661da.chunk.js.map": "/sangstagrams/static/js/2.d47661da.chunk.js.map",
+    "index.html": "/sangstagrams/index.html",
+    "precache-manifest.71a53b03bd62be586888db5d3179ed06.js": "/sangstagrams/precache-manifest.71a53b03bd62be586888db5d3179ed06.js",
+    "service-worker.js": "/sangstagrams/service-worker.js",
+    "static/css/2.d34346ea.chunk.css.map": "/sangstagrams/static/css/2.d34346ea.chunk.css.map",
+    "static/js/2.d47661da.chunk.js.LICENSE.txt": "/sangstagrams/static/js/2.d47661da.chunk.js.LICENSE.txt",
+    "static/media/logo.png": "/sangstagrams/static/media/logo.d309b6b7.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.42250ee9.js",
+    "static/css/2.d34346ea.chunk.css",
+    "static/js/2.d47661da.chunk.js",
+    "static/js/main.bae63ff2.chunk.js"
+  ]
+}
